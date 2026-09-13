@@ -18,6 +18,11 @@ import {
 const HUMAN: Player = "X";
 const OPPONENT: Player = "O";
 
+function playSound(name: "move" | "win" | "draw") {
+  const audio = new Audio(`/sounds/${name}.mp3`);
+  audio.play().catch(() => {});
+}
+
 type Mode = "twoPlayer" | "vsComputer";
 
 const MODES: { value: Mode; label: string }[] = [
@@ -40,16 +45,15 @@ export default function Home() {
 
     const nextBoard = applyMove(board, index, current);
     setBoard(nextBoard);
-    // TODO: sound — playSound("move") here. See the "Sound effects"
-    // workshop breakout in /tutorial.
+    playSound("move");
 
     const nextWinner = checkWinner(nextBoard);
     if (nextWinner) {
-      // TODO: sound — playSound("win") here.
+      playSound("win");
       return;
     }
     if (isDraw(nextBoard)) {
-      // TODO: sound — playSound("draw") here.
+      playSound("draw");
       return;
     }
     setCurrent(current === HUMAN ? OPPONENT : HUMAN);
@@ -72,16 +76,15 @@ export default function Home() {
       const index = randomMove(board);
       const nextBoard = applyMove(board, index, OPPONENT);
       setBoard(nextBoard);
-      // TODO: sound — playSound("move") here. See the "Sound effects"
-      // workshop breakout in /tutorial.
+      playSound("move");
 
       const nextWinner = checkWinner(nextBoard);
       if (nextWinner) {
-        // TODO: sound — playSound("win") here.
+        playSound("win");
         return;
       }
       if (isDraw(nextBoard)) {
-        // TODO: sound — playSound("draw") here.
+        playSound("draw");
         return;
       }
       setCurrent(HUMAN);
